@@ -2,240 +2,184 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Head from 'next/head'
-import { Shield, Key, Lock, FileCheck, ArrowRight } from 'lucide-react'
+import { Shield, Lock, FileCheck, Key, Command, Search, Fingerprint, Database, Check } from 'lucide-react'
 import Layout from '../components/Layout'
 
 export default function Home() {
   return (
     <>
       <Head>
-        <title>Digital Signature Demo - Cybersecurity Portfolio</title>
-        <meta name="description" content="Educational digital signature demonstration for cybersecurity learning" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <title>DigiSign — Secure Digital Signatures</title>
+        <meta name="description" content="Sign and verify documents with military-grade cryptography." />
       </Head>
 
       <Layout>
-        {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-          {/* Animated background elements */}
-          <div className="absolute inset-0 z-0">
-            <div className="absolute top-20 left-10 w-2 h-2 bg-cyber-blue rounded-full animate-pulse"></div>
-            <div className="absolute top-40 right-20 w-1 h-1 bg-cyber-green rounded-full animate-pulse delay-1000"></div>
-            <div className="absolute bottom-32 left-1/4 w-1.5 h-1.5 bg-cyber-purple rounded-full animate-pulse delay-500"></div>
-            <div className="absolute bottom-20 right-1/3 w-1 h-1 bg-cyber-blue rounded-full animate-pulse delay-700"></div>
+        {/* --- Hero Section with Stripe Band --- */}
+        <section className="relative pt-[96px] pb-[96px] px-6 md:px-12 flex flex-col items-center justify-center text-center overflow-hidden min-h-[85vh]">
+          {/* Raycast signature red stripe gradient behind the headline */}
+          <div className="absolute top-0 left-0 w-full h-[400px] opacity-80 pointer-events-none overflow-hidden flex justify-center">
+            <div 
+              className="w-[120%] h-[300px] absolute -top-[100px]"
+              style={{
+                background: 'repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(255, 87, 87, 0.1) 40px, rgba(255, 87, 87, 0.1) 80px), linear-gradient(135deg, #ff5757 0%, #a1131a 100%)',
+                maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%)'
+              }}
+            />
           </div>
 
-          <div className="container mx-auto px-6 text-center z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="max-w-4xl mx-auto"
-            >
-              {/* Main Title */}
-              <motion.h1 
-                className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-cyber-blue via-cyber-purple to-cyber-green bg-clip-text text-transparent"
-                initial={{ scale: 0.9 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                Digital Signature Demo
-              </motion.h1>
+          <div className="relative z-10 w-full max-w-[1080px] mx-auto flex flex-col items-center">
+            <h1 className="hero-headline mb-6 max-w-[800px] mx-auto text-white">
+              Cryptographic security. <br className="hidden sm:block" />
+              <span className="text-body">Made beautifully simple.</span>
+            </h1>
+            
+            <p className="text-[18px] text-body mb-10 max-w-[600px] mx-auto leading-[1.6]">
+              Sign and verify documents using military-grade RSA-2048 encryption. A lightning-fast, secure workflow designed for modern teams.
+            </p>
+            
+            <div className="flex items-center gap-4 mb-16">
+              <Link href="/sign" className="button-primary h-[40px] px-6 text-[15px]">
+                Start Signing
+              </Link>
+              <Link href="/sign" className="button-secondary h-[40px] px-6 text-[15px]">
+                Learn more
+              </Link>
+            </div>
 
-              {/* Subtitle */}
-              <motion.p 
-                className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-              >
-                Explore the fundamentals of digital signatures and cryptographic security
-                <br />
-                <span className="text-cyber-blue">Learn • Sign • Verify • Secure</span>
-              </motion.p>
-
-              {/* Feature highlights */}
-              <motion.div 
-                className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-              >
-                <div className="flex flex-col items-center space-y-2">
-                  <Shield className="w-8 h-8 text-cyber-blue" />
-                  <span className="text-sm text-gray-400">Secure</span>
-                </div>
-                <div className="flex flex-col items-center space-y-2">
-                  <Key className="w-8 h-8 text-cyber-green" />
-                  <span className="text-sm text-gray-400">Encrypted</span>
-                </div>
-                <div className="flex flex-col items-center space-y-2">
-                  <Lock className="w-8 h-8 text-cyber-purple" />
-                  <span className="text-sm text-gray-400">Authentic</span>
-                </div>
-                <div className="flex flex-col items-center space-y-2">
-                  <FileCheck className="w-8 h-8 text-cyber-blue" />
-                  <span className="text-sm text-gray-400">Verified</span>
-                </div>
-              </motion.div>
-
-              {/* CTA Button */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.8 }}
-              >
-                <Link href="/sign" className="inline-block">
-                  <motion.button 
-                    className="cyber-button text-lg px-8 py-4 flex items-center space-x-2 mx-auto"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <span>Try it Now</span>
-                    <ArrowRight className="w-5 h-5" />
-                  </motion.button>
-                </Link>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* What are Digital Signatures Section */}
-        <section className="py-20 px-6">
-          <div className="container mx-auto max-w-6xl">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl font-bold mb-6 text-white">
-                What are Digital Signatures?
-              </h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                Digital signatures are cryptographic mechanisms that provide authentication, 
-                integrity, and non-repudiation for digital documents and communications.
-              </p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              {/* Info Cards */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="space-y-6"
-              >
-                <div className="cyber-card">
-                  <div className="flex items-start space-x-4">
-                    <Shield className="w-8 h-8 text-cyber-blue mt-1" />
-                    <div>
-                      <h3 className="text-xl font-semibold mb-2 text-cyber-blue">Authentication</h3>
-                      <p className="text-gray-300">
-                        Verify the identity of the sender and ensure the message came from a trusted source.
-                      </p>
-                    </div>
+            {/* --- Command Palette Mockup (The "Product Screenshot") --- */}
+            <div className="w-full max-w-[840px] mx-auto cmd-mockup-container text-left flex flex-col bg-surface shadow-[0_32px_128px_-16px_rgba(0,0,0,0.8)]">
+              {/* Header / Search */}
+              <div className="h-[52px] border-b border-hairline flex items-center px-4 gap-3 bg-surface relative">
+                <Search className="w-5 h-5 text-mute absolute left-4" />
+                <input 
+                  type="text" 
+                  placeholder="Search or type a command..." 
+                  className="bg-transparent border-none outline-none text-[16px] text-on-dark flex-1 h-full pl-8 pr-4 placeholder:text-body focus:ring-0 w-full"
+                />
+                <div className="rc-keycap">DigiSign</div>
+              </div>
+              
+              {/* Content Rows */}
+              <div className="p-2 space-y-1">
+                <div className="px-3 py-2 text-[12px] font-medium text-mute tracking-[0.4px]">ACTIONS</div>
+                
+                <div className="cmd-mockup-row" data-active="true">
+                  <div className="w-8 h-8 rounded-md bg-accent-blue-soft border border-hairline flex items-center justify-center">
+                    <FileCheck className="w-4 h-4 text-accent-blue" />
+                  </div>
+                  <div className="flex-1 flex flex-col justify-center">
+                    <span className="text-[14px] font-medium text-on-dark leading-tight">Sign Document</span>
+                    <span className="text-[12px] text-mute leading-tight mt-0.5">Generate RSA signature for file</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className="rc-keycap">⌘</span>
+                    <span className="rc-keycap">S</span>
                   </div>
                 </div>
 
-                <div className="cyber-card">
-                  <div className="flex items-start space-x-4">
-                    <FileCheck className="w-8 h-8 text-cyber-green mt-1" />
-                    <div>
-                      <h3 className="text-xl font-semibold mb-2 text-cyber-green">Integrity</h3>
-                      <p className="text-gray-300">
-                        Detect any unauthorized changes or tampering with the original document.
-                      </p>
-                    </div>
+                <div className="cmd-mockup-row">
+                  <div className="w-8 h-8 rounded-md bg-accent-green-soft border border-hairline flex items-center justify-center">
+                    <Shield className="w-4 h-4 text-accent-green" />
+                  </div>
+                  <div className="flex-1 flex flex-col justify-center">
+                    <span className="text-[14px] font-medium text-on-dark leading-tight">Verify Signature</span>
+                    <span className="text-[12px] text-mute leading-tight mt-0.5">Check document integrity</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className="rc-keycap">⌘</span>
+                    <span className="rc-keycap">V</span>
                   </div>
                 </div>
 
-                <div className="cyber-card">
-                  <div className="flex items-start space-x-4">
-                    <Lock className="w-8 h-8 text-cyber-purple mt-1" />
-                    <div>
-                      <h3 className="text-xl font-semibold mb-2 text-cyber-purple">Non-repudiation</h3>
-                      <p className="text-gray-300">
-                        Prevent the sender from denying they signed the document at a later time.
-                      </p>
-                    </div>
+                <div className="cmd-mockup-row">
+                  <div className="w-8 h-8 rounded-md bg-surface-elevated border border-hairline flex items-center justify-center">
+                    <Key className="w-4 h-4 text-body" />
+                  </div>
+                  <div className="flex-1 flex flex-col justify-center">
+                    <span className="text-[14px] font-medium text-on-dark leading-tight">Generate Key Pair</span>
+                    <span className="text-[12px] text-mute leading-tight mt-0.5">Create new RSA-2048 keys</span>
                   </div>
                 </div>
-              </motion.div>
-
-              {/* Process Diagram */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="cyber-card"
-              >
-                <h3 className="text-2xl font-semibold mb-6 text-center text-cyber-blue">
-                  Signing Process
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-4 p-4 bg-cyber-dark rounded-lg">
-                    <div className="w-8 h-8 bg-cyber-blue rounded-full flex items-center justify-center text-sm font-bold">1</div>
-                    <span>Document is hashed using SHA-256</span>
-                  </div>
-                  <div className="flex items-center space-x-4 p-4 bg-cyber-dark rounded-lg">
-                    <div className="w-8 h-8 bg-cyber-green rounded-full flex items-center justify-center text-sm font-bold">2</div>
-                    <span>Hash is encrypted with private key</span>
-                  </div>
-                  <div className="flex items-center space-x-4 p-4 bg-cyber-dark rounded-lg">
-                    <div className="w-8 h-8 bg-cyber-purple rounded-full flex items-center justify-center text-sm font-bold">3</div>
-                    <span>Signature is attached to document</span>
-                  </div>
-                  <div className="flex items-center space-x-4 p-4 bg-cyber-dark rounded-lg">
-                    <div className="w-8 h-8 bg-cyber-blue rounded-full flex items-center justify-center text-sm font-bold">4</div>
-                    <span>Verified using public key</span>
-                  </div>
-                </div>
-              </motion.div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Why Digital Signatures Matter */}
-        <section className="py-20 px-6 bg-gradient-to-r from-cyber-dark to-cyber-gray">
-          <div className="container mx-auto max-w-4xl text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-4xl font-bold mb-8 text-white">
-                Why Digital Signatures Matter in Cybersecurity
-              </h2>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="cyber-card text-center">
-                  <Key className="w-12 h-12 text-cyber-blue mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold mb-3">Legal Validity</h3>
-                  <p className="text-gray-300">
-                    Legally binding in most jurisdictions, equivalent to handwritten signatures.
-                  </p>
-                </div>
-                <div className="cyber-card text-center">
-                  <Shield className="w-12 h-12 text-cyber-green mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold mb-3">Security</h3>
-                  <p className="text-gray-300">
-                    Protect against forgery, tampering, and unauthorized access to documents.
-                  </p>
-                </div>
-                <div className="cyber-card text-center">
-                  <FileCheck className="w-12 h-12 text-cyber-purple mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold mb-3">Efficiency</h3>
-                  <p className="text-gray-300">
-                    Streamline document workflows and eliminate paper-based processes.
-                  </p>
-                </div>
+        {/* --- Features Grid --- */}
+        <section className="py-[96px] px-6 md:px-12 max-w-[1240px] mx-auto w-full">
+          <div className="text-center mb-16">
+            <h2 className="text-[32px] md:text-[40px] font-semibold text-on-dark tracking-tight mb-4">
+              Built for security teams.
+            </h2>
+            <p className="text-[18px] text-body max-w-[600px] mx-auto">
+              Everything you need to integrate digital signatures into your workflow, without the complexity.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Feature 1 */}
+            <div className="rc-card-surface p-[24px] flex flex-col">
+              <div className="w-10 h-10 rounded-md bg-surface-card border border-hairline flex items-center justify-center mb-6">
+                <Lock className="w-5 h-5 text-body" />
               </div>
-            </motion.div>
+              <h3 className="text-[18px] font-semibold text-on-dark mb-2 tracking-[0.2px]">RSA-2048 Encryption</h3>
+              <p className="text-[14px] text-body leading-[1.6] mb-6 flex-1">
+                Industry-standard asymmetric cryptography ensures your signatures cannot be forged or duplicated.
+              </p>
+              <div className="flex">
+                <Link href="/sign" className="text-[14px] font-medium text-on-dark flex items-center gap-1 hover:text-body transition-colors">
+                  Learn more <span className="text-mute">→</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Feature 2 - Elevated */}
+            <div className="rc-card-elevated p-[24px] flex flex-col relative overflow-hidden">
+              <div className="w-10 h-10 rounded-md bg-accent-green-soft border border-hairline flex items-center justify-center mb-6">
+                <Fingerprint className="w-5 h-5 text-accent-green" />
+              </div>
+              <h3 className="text-[18px] font-semibold text-on-dark mb-2 tracking-[0.2px]">Document Integrity</h3>
+              <p className="text-[14px] text-body leading-[1.6] mb-6 flex-1">
+                SHA-256 hashing detects even a single byte change in the original document after signing.
+              </p>
+              <div className="flex">
+                <Link href="/sign" className="text-[14px] font-medium text-on-dark flex items-center gap-1 hover:text-body transition-colors">
+                  Try it out <span className="text-mute">→</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="rc-card-surface p-[24px] flex flex-col">
+              <div className="w-10 h-10 rounded-md bg-surface-card border border-hairline flex items-center justify-center mb-6">
+                <Database className="w-5 h-5 text-body" />
+              </div>
+              <h3 className="text-[18px] font-semibold text-on-dark mb-2 tracking-[0.2px]">Non-repudiation</h3>
+              <p className="text-[14px] text-body leading-[1.6] mb-6 flex-1">
+                Create a mathematically provable audit trail linking a specific identity to a specific document.
+              </p>
+              <div className="flex">
+                <Link href="/sign" className="text-[14px] font-medium text-on-dark flex items-center gap-1 hover:text-body transition-colors">
+                  Learn more <span className="text-mute">→</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* --- Bottom CTA --- */}
+        <section className="py-[96px] px-6 md:px-12 flex flex-col items-center justify-center text-center">
+          <div className="rc-card-surface p-12 max-w-[800px] w-full flex flex-col items-center">
+            <h2 className="text-[32px] md:text-[40px] font-semibold text-on-dark tracking-tight mb-4">
+              Ready to secure your files?
+            </h2>
+            <p className="text-[18px] text-body mb-8 max-w-[500px]">
+              No registration required. Generate keys and start signing immediately directly in your browser.
+            </p>
+            <Link href="/sign" className="button-primary h-[40px] px-8 text-[15px]">
+              Start Signing Now
+            </Link>
           </div>
         </section>
       </Layout>

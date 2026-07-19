@@ -69,11 +69,8 @@ export default async function handler(req, res) {
     // Convert Base64 signature back to buffer
     const signatureBuffer = Buffer.from(signatureBase64, 'base64')
     
-    // Generate SHA-256 hash of the original file
-    const hash = crypto.createHash('sha256').update(originalContent).digest()
-    
     // Verify the signature using RSA public key
-    const isValid = crypto.verify('sha256', hash, {
+    const isValid = crypto.verify('sha256', originalContent, {
       key: keys.publicKey,
       padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
     }, signatureBuffer)

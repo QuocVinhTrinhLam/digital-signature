@@ -2,72 +2,99 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom scrollbar for dark theme */
-::-webkit-scrollbar {
-  width: 8px;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-::-webkit-scrollbar-track {
-  background: #1a1a1a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #00d4ff;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #00a8cc;
-}
-
-/* Global styles */
-html,
+/* Raycast Typographic Settings */
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: #0a0a0a;
-  color: #ffffff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-feature-settings: "calt", "kern", "liga", "ss03";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #07080a; /* canvas */
+  color: #cdcdcd; /* body text */
 }
 
 * {
   box-sizing: border-box;
 }
 
-/* Custom button styles */
-.cyber-button {
-  @apply bg-gradient-to-r from-cyber-blue to-cyber-purple text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg;
+/* Custom Scrollbar for Dark Canvas */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #07080a;
+}
+::-webkit-scrollbar-thumb {
+  background: #242728; /* hairline */
+  border: 2px solid #07080a;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #434345; /* stone */
 }
 
-.cyber-button:hover {
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-}
+@layer components {
+  /* --- Buttons --- */
+  .button-primary {
+    @apply bg-primary text-on-primary font-medium text-[14px] px-4 h-[36px] rounded-md inline-flex items-center justify-center transition-colors tracking-[0.2px] hover:bg-primary-pressed active:scale-[0.98];
+  }
 
-/* Card styles */
-.cyber-card {
-  @apply bg-cyber-gray border border-gray-700 rounded-lg p-6 shadow-lg backdrop-blur-sm;
-  background: rgba(26, 26, 26, 0.8);
-}
+  .button-secondary {
+    @apply bg-transparent text-on-dark font-medium text-[14px] px-4 h-[36px] rounded-md inline-flex items-center justify-center transition-colors tracking-[0.2px] hover:bg-surface-card active:scale-[0.98];
+  }
 
-/* Input styles */
-.cyber-input {
-  @apply bg-cyber-gray border border-gray-600 text-white rounded-lg px-4 py-2 focus:border-cyber-blue focus:outline-none transition-colors;
-}
+  .button-tertiary {
+    @apply bg-surface-elevated text-on-dark font-medium text-[14px] px-4 h-[36px] rounded-md inline-flex items-center justify-center transition-colors tracking-[0.2px] hover:bg-surface-card active:scale-[0.98];
+  }
 
-/* Animation for matrix-like background effect */
-@keyframes matrix {
-  0% { transform: translateY(-100vh); }
-  100% { transform: translateY(100vh); }
-}
+  /* --- Cards --- */
+  .rc-card-surface {
+    @apply bg-surface border border-hairline rounded-lg;
+  }
+  
+  .rc-card-elevated {
+    @apply bg-surface-elevated border border-hairline rounded-lg;
+  }
 
-.matrix-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.1;
+  .rc-card-card {
+    @apply bg-surface-card border border-hairline rounded-lg;
+  }
+
+  /* --- Inputs --- */
+  .rc-input {
+    @apply bg-surface-elevated border border-hairline text-on-dark text-[16px] px-3 h-[36px] rounded-md transition-colors outline-none focus:border-hairline-strong;
+  }
+
+  /* --- Command Palette Mockup Chrome --- */
+  .cmd-mockup-container {
+    @apply bg-surface border border-hairline rounded-xl overflow-hidden shadow-[0_16px_64px_-16px_rgba(0,0,0,0.5)];
+  }
+
+  .cmd-mockup-row {
+    @apply bg-transparent text-on-dark text-[16px] px-[10px] py-[6px] rounded-sm flex items-center gap-3 transition-colors;
+  }
+
+  .cmd-mockup-row:hover, .cmd-mockup-row[data-active="true"] {
+    @apply bg-surface-card;
+  }
+
+  /* --- Pills & Badges --- */
+  .rc-pill-tab {
+    @apply bg-transparent text-body text-[14px] px-[10px] py-[4px] rounded-full transition-colors cursor-pointer tracking-normal;
+  }
+
+  .rc-pill-tab[data-active="true"] {
+    @apply bg-surface-elevated text-on-dark;
+  }
+
+  .rc-keycap {
+    @apply bg-key-gradient from-key-bg-start to-key-bg-end text-body text-[13px] px-[6px] py-[1px] h-[20px] rounded-xs inline-flex items-center justify-center border border-hairline-soft tracking-[0.1px];
+  }
+
+  /* --- Hero Typography Special Flags --- */
+  .hero-headline {
+    @apply text-ink text-[44px] md:text-[64px] font-semibold leading-[1.1] tracking-normal;
+    font-feature-settings: "calt", "kern", "ss02", "ss03", "ss08"; /* Note: liga disabled per Raycast spec, ss02/ss08 enabled */
+  }
 }

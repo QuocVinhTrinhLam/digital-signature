@@ -43,3 +43,7 @@ logs
 # Temporary files
 tmp/
 temp/
+
+# Configuration Documents
+Claude.md
+Design.md

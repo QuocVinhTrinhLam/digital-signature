@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Head from 'next/head'
-import { Upload, Download, FileCheck, AlertCircle, Key, Eye, EyeOff } from 'lucide-react'
+import { FileCheck, ShieldCheck, Key, Settings2 } from 'lucide-react'
 import Layout from '../components/Layout'
 import FileUpload from '../components/FileUpload'
 import SignatureDisplay from '../components/SignatureDisplay'
@@ -14,11 +14,10 @@ export default function SignPage() {
   const [signature, setSignature] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
 
-  // Handle file signing
   const handleFileSign = async (file: File) => {
     setIsLoading(true)
     setSignedFile(file)
-    
+
     try {
       const formData = new FormData()
       formData.append('file', file)
@@ -28,9 +27,7 @@ export default function SignPage() {
         body: formData,
       })
 
-      if (!response.ok) {
-        throw new Error('Failed to sign file')
-      }
+      if (!response.ok) throw new Error('Failed to sign file')
 
       const data = await response.json()
       setSignature(data.signature)
@@ -42,21 +39,20 @@ export default function SignPage() {
     }
   }
 
-  // Handle signature download
   const handleDownloadSignature = () => {
     if (!signature || !signedFile) return
 
     const signatureData = {
       filename: signedFile.name,
-      signature: signature,
+      signature,
       timestamp: new Date().toISOString(),
-      algorithm: 'RSA-SHA256'
+      algorithm: 'RSA-SHA256',
     }
 
     const blob = new Blob([JSON.stringify(signatureData, null, 2)], {
-      type: 'application/json'
+      type: 'application/json',
     })
-    
+
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
@@ -69,139 +65,95 @@ export default function SignPage() {
 
   const tabs = [
     { id: 'sign', label: 'Sign Document', icon: FileCheck },
-    { id: 'verify', label: 'Verify Signature', icon: AlertCircle },
-    { id: 'keys', label: 'View Keys', icon: Key },
+    { id: 'verify', label: 'Verify Signature', icon: ShieldCheck },
+    { id: 'keys', label: 'Manage Keys', icon: Key },
   ]
 
   return (
     <>
       <Head>
-        <title>Digital Signature Tool - Sign & Verify Documents</title>
-        <meta name="description" content="Sign and verify documents using RSA digital signatures" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>DigiSign — Cryptographic Tools</title>
+        <meta name="description" content="Sign and verify documents using RSA-2048." />
       </Head>
 
       <Layout>
-        <div className="min-h-screen py-12 px-6">
-          <div className="container mx-auto max-w-6xl">
+        <div className="py-[64px] px-6 md:px-12 flex flex-col items-center min-h-[80vh]">
+          <div className="w-full max-w-[800px] flex flex-col items-center">
+            
             {/* Header */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-12"
-            >
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cyber-blue to-cyber-purple bg-clip-text text-transparent">
-                Digital Signature Tool
-              </h1>
-              <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-                Sign documents securely or verify existing signatures using RSA cryptography
-              </p>
-            </motion.div>
-
-            {/* Tab Navigation */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex justify-center mb-8"
-            >
-              <div className="flex space-x-1 bg-cyber-gray p-1 rounded-lg">
-                {tabs.map((tab) => {
-                  const Icon = tab.icon
-                  return (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id as any)}
-                      className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
-                        activeTab === tab.id
-                          ? 'bg-cyber-blue text-white shadow-lg'
-                          : 'text-gray-400 hover:text-white hover:bg-cyber-dark'
-                      }`}
-                    >
-                      <Icon className="w-4 h-4" />
-                      <span className="hidden sm:block">{tab.label}</span>
-                    </button>
-                  )
-                })}
+            <div className="text-center mb-10 w-full">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <Settings2 className="w-5 h-5 text-mute" />
+                <span className="text-[14px] font-medium text-mute tracking-[0.2px]">CRYPTOGRAPHIC TOOLS</span>
               </div>
-            </motion.div>
+              <h1 className="text-[32px] md:text-[40px] font-semibold text-on-dark tracking-tight mb-3">
+                {activeTab === 'sign' && 'Sign a Document'}
+                {activeTab === 'verify' && 'Verify a Signature'}
+                {activeTab === 'keys' && 'Key Management'}
+              </h1>
+              <p className="text-[16px] text-body max-w-[500px] mx-auto">
+                {activeTab === 'sign' && 'Generate an RSA-2048 signature for any file to guarantee its authenticity and integrity.'}
+                {activeTab === 'verify' && 'Upload a document and its signature file to cryptographically verify it hasn\'t been tampered with.'}
+                {activeTab === 'keys' && 'View the current RSA-2048 key pair used by the system for cryptographic operations.'}
+              </p>
+            </div>
 
-            {/* Tab Content */}
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4 }}
-              className="max-w-4xl mx-auto"
-            >
-              {activeTab === 'sign' && (
-                <div className="space-y-8">
-                  {/* File Upload Section */}
-                  <div className="cyber-card">
-                    <h2 className="text-2xl font-semibold mb-6 flex items-center space-x-2">
-                      <Upload className="w-6 h-6 text-cyber-blue" />
-                      <span>Upload Document to Sign</span>
-                    </h2>
-                    <FileUpload
-                      onFileSelect={handleFileSign}
-                      accept=".txt,.pdf,.doc,.docx"
-                      maxSize={10 * 1024 * 1024} // 10MB
-                      isLoading={isLoading}
-                    />
-                    <p className="text-sm text-gray-400 mt-4">
-                      Supported formats: TXT, PDF, DOC, DOCX (max 10MB)
-                    </p>
-                  </div>
+            {/* Pill Tabs (Raycast Style) */}
+            <div className="flex items-center gap-1 bg-transparent mb-8">
+              {tabs.map((tab) => {
+                const isActive = activeTab === tab.id
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id as any)}
+                    className="rc-pill-tab flex items-center gap-2 relative"
+                    data-active={isActive}
+                  >
+                    <tab.icon className="w-4 h-4" />
+                    <span>{tab.label}</span>
+                  </button>
+                )
+              })}
+            </div>
 
-                  {/* Signature Display */}
-                  {signature && signedFile && (
-                    <SignatureDisplay
-                      signature={signature}
-                      filename={signedFile.name}
-                      onDownload={handleDownloadSignature}
-                    />
+            {/* Tab Content Container */}
+            <div className="w-full">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.15, ease: "easeOut" }}
+                >
+                  {activeTab === 'sign' && (
+                    <div className="space-y-6">
+                      <div className="rc-card-surface p-[24px]">
+                        <h2 className="text-[16px] font-medium text-on-dark mb-4">Upload file to sign</h2>
+                        <FileUpload
+                          onFileSelect={handleFileSign}
+                          accept=".txt,.pdf,.doc,.docx"
+                          maxSize={10 * 1024 * 1024}
+                          isLoading={isLoading}
+                        />
+                      </div>
+
+                      {signature && signedFile && (
+                        <SignatureDisplay
+                          signature={signature}
+                          filename={signedFile.name}
+                          onDownload={handleDownloadSignature}
+                        />
+                      )}
+                    </div>
                   )}
 
-                  {/* How it Works */}
-                  <div className="cyber-card">
-                    <h3 className="text-xl font-semibold mb-4 text-cyber-blue">How Digital Signing Works</h3>
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <h4 className="font-semibold mb-2 text-cyber-green">1. Hash Generation</h4>
-                        <p className="text-gray-300 text-sm mb-4">
-                          Your document is processed through SHA-256 to create a unique fingerprint (hash).
-                        </p>
-                        
-                        <h4 className="font-semibold mb-2 text-cyber-purple">2. Signature Creation</h4>
-                        <p className="text-gray-300 text-sm">
-                          The hash is encrypted using our private RSA key to create the digital signature.
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-2 text-cyber-blue">3. Verification</h4>
-                        <p className="text-gray-300 text-sm mb-4">
-                          Anyone can verify the signature using our public key to ensure document integrity.
-                        </p>
-                        
-                        <h4 className="font-semibold mb-2 text-cyber-green">4. Security</h4>
-                        <p className="text-gray-300 text-sm">
-                          Any tampering with the document will result in signature verification failure.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
+                  {activeTab === 'verify' && <VerificationSection />}
+                  {activeTab === 'keys' && <KeysSection />}
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-              {activeTab === 'verify' && (
-                <VerificationSection />
-              )}
-
-              {activeTab === 'keys' && (
-                <KeysSection />
-              )}
-            </motion.div>
           </div>
         </div>
       </Layout>

@@ -66,11 +66,8 @@ export default async function handler(req, res) {
     // Read file content
     const fileContent = fs.readFileSync(uploadedFile.filepath)
     
-    // Generate SHA-256 hash of the file content
-    const hash = crypto.createHash('sha256').update(fileContent).digest()
-    
-    // Sign the hash using RSA private key
-    const signature = crypto.sign('sha256', hash, {
+    // Sign the content using RSA private key
+    const signature = crypto.sign('sha256', fileContent, {
       key: keys.privateKey,
       padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
     })

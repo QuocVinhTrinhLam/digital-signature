@@ -1,86 +1,124 @@
 import React, { ReactNode } from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { Home, FileSignature, Github, Shield } from 'lucide-react'
+import { useRouter } from 'next/router'
+import { Shield } from 'lucide-react'
 
 interface LayoutProps {
   children: ReactNode
 }
 
 export default function Layout({ children }: LayoutProps) {
-  return (
-    <div className="min-h-screen bg-cyber-dark text-white">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-cyber-gray/80 backdrop-blur-sm border-b border-gray-700">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2">
-              <Shield className="w-8 h-8 text-cyber-blue" />
-              <span className="text-xl font-bold bg-gradient-to-r from-cyber-blue to-cyber-purple bg-clip-text text-transparent">
-                DigiSign Demo
-              </span>
-            </Link>
+  const router = useRouter()
 
-            {/* Navigation Links */}
-            <div className="flex items-center space-x-6">
-              <Link 
-                href="/" 
-                className="flex items-center space-x-2 text-gray-300 hover:text-cyber-blue transition-colors"
-              >
-                <Home className="w-4 h-4" />
-                <span className="hidden sm:block">Home</span>
-              </Link>
-              <Link 
-                href="/sign" 
-                className="flex items-center space-x-2 text-gray-300 hover:text-cyber-blue transition-colors"
-              >
-                <FileSignature className="w-4 h-4" />
-                <span className="hidden sm:block">Sign & Verify</span>
-              </Link>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center space-x-2 text-gray-300 hover:text-cyber-blue transition-colors"
-              >
-                <Github className="w-4 h-4" />
-                <span className="hidden sm:block">GitHub</span>
-              </a>
+  const navLinks = [
+    { href: '/', label: 'Home' },
+    { href: '/sign', label: 'Sign & Verify' },
+    { href: '/keys', label: 'Keys' }, // We'll move Keys to a separate tab in sign.tsx, but let's keep it simple for now or just link to /sign
+  ]
+
+  return (
+    <div className="min-h-screen bg-canvas text-body flex flex-col font-sans selection:bg-surface-elevated selection:text-white">
+      {/* Primary Nav */}
+      <nav className="h-[56px] bg-canvas border-b border-hairline flex items-center justify-between px-6 md:px-12 sticky top-0 z-50">
+        <div className="flex items-center gap-8">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="w-6 h-6 rounded-md bg-surface-card border border-hairline flex items-center justify-center group-hover:bg-surface-elevated transition-colors">
+              <Shield className="w-3.5 h-3.5 text-on-dark" />
             </div>
+            <span className="text-on-dark font-medium text-[16px] tracking-tight">
+              DigiSign
+            </span>
+          </Link>
+
+          {/* Links (Desktop) */}
+          <div className="hidden md:flex items-center gap-6">
+            <Link 
+              href="/" 
+              className={`text-[14px] font-medium tracking-[0.2px] transition-colors ${router.pathname === '/' ? 'text-on-dark' : 'text-body hover:text-on-dark'}`}
+            >
+              Overview
+            </Link>
+            <Link 
+              href="/sign" 
+              className={`text-[14px] font-medium tracking-[0.2px] transition-colors ${router.pathname === '/sign' ? 'text-on-dark' : 'text-body hover:text-on-dark'}`}
+            >
+              Sign Document
+            </Link>
           </div>
+        </div>
+
+        {/* Right Nav */}
+        <div className="flex items-center gap-4">
+          <a
+            href="https://github.com/QuocVinhTrinhLam/digital-signature"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:block text-[14px] font-medium text-body hover:text-on-dark transition-colors tracking-[0.2px]"
+          >
+            GitHub
+          </a>
+          <Link href="/sign" className="button-primary">
+            Start Signing
+          </Link>
         </div>
       </nav>
 
       {/* Main Content */}
-      <main className="pt-20">
+      <main className="flex-1 flex flex-col">
         {children}
       </main>
 
-      {/* Footer */}
-      <footer className="bg-cyber-gray border-t border-gray-700 py-8 px-6">
-        <div className="container mx-auto text-center">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <Shield className="w-6 h-6 text-cyber-blue" />
-            <span className="text-lg font-semibold">Digital Signature Demo</span>
+      {/* Footer Section */}
+      <footer className="bg-canvas border-t border-hairline pt-16 pb-16 px-6 md:px-12 mt-auto">
+        <div className="max-w-[1240px] mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-16">
+            <div className="col-span-2 lg:col-span-2">
+              <div className="flex items-center gap-2 mb-4">
+                <Shield className="w-4 h-4 text-mute" />
+                <span className="text-on-dark font-medium text-[14px] tracking-tight">DigiSign</span>
+              </div>
+              <p className="text-mute text-[13px] leading-[1.6] max-w-xs">
+                A cryptographic tool for signing and verifying digital documents using RSA-2048 and SHA-256.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="text-on-dark text-[14px] font-medium tracking-[0.2px] mb-4">Product</h4>
+              <ul className="space-y-3">
+                <li><Link href="/" className="text-body text-[14px] hover:text-on-dark transition-colors">Overview</Link></li>
+                <li><Link href="/sign" className="text-body text-[14px] hover:text-on-dark transition-colors">Sign</Link></li>
+                <li><Link href="/sign" className="text-body text-[14px] hover:text-on-dark transition-colors">Verify</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-on-dark text-[14px] font-medium tracking-[0.2px] mb-4">Security</h4>
+              <ul className="space-y-3">
+                <li><span className="text-body text-[14px]">RSA-2048</span></li>
+                <li><span className="text-body text-[14px]">SHA-256</span></li>
+                <li><span className="text-body text-[14px]">PKCS#1 PSS</span></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-on-dark text-[14px] font-medium tracking-[0.2px] mb-4">Company</h4>
+              <ul className="space-y-3">
+                <li><a href="#" className="text-body text-[14px] hover:text-on-dark transition-colors">About</a></li>
+                <li><a href="#" className="text-body text-[14px] hover:text-on-dark transition-colors">Blog</a></li>
+                <li><a href="#" className="text-body text-[14px] hover:text-on-dark transition-colors">Careers</a></li>
+              </ul>
+            </div>
           </div>
-          <p className="text-gray-400 mb-4">
-            Educational cybersecurity demonstration built with Next.js and Node.js
-          </p>
-          <div className="flex justify-center space-x-6 text-sm text-gray-500">
-            <span>RSA-2048 Encryption</span>
-            <span>•</span>
-            <span>SHA-256 Hashing</span>
-            <span>•</span>
-            <span>Educational Use Only</span>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-between pt-8 border-t border-hairline text-[13px] text-mute">
+            <p>© {new Date().getFullYear()} DigiSign. All rights reserved.</p>
+            <div className="flex gap-4 mt-4 sm:mt-0">
+              <a href="https://github.com/QuocVinhTrinhLam/digital-signature" target="_blank" rel="noopener noreferrer" className="hover:text-on-dark transition-colors">GitHub</a>
+            </div>
           </div>
         </div>
       </footer>
-
-      {/* Background Matrix Effect */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-5">
-        <div className="absolute inset-0 bg-gradient-to-br from-cyber-blue/10 via-transparent to-cyber-purple/10"></div>
-      </div>
     </div>
   )
 }
