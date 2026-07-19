@@ -196,12 +196,12 @@ export default function Home() {
                 <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
                 <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
               </div>
-              <div><span className="text-accent-blue">const</span> signature = crypto.sign(<span className="text-accent-green">'sha256'</span>, fileContent, {'{'}</div>
+              <div><span className="text-accent-blue">const</span> signature = crypto.sign(<span className="text-accent-green">&apos;sha256&apos;</span>, fileContent, {'{'}</div>
               <div className="pl-4">key: privateKey,</div>
               <div className="pl-4">padding: crypto.constants.<span className="text-on-dark">RSA_PKCS1_PSS_PADDING</span></div>
               <div>{'}'});</div>
               <br />
-              <div><span className="text-accent-blue">const</span> isValid = crypto.verify(<span className="text-accent-green">'sha256'</span>, originalContent, {'{'}</div>
+              <div><span className="text-accent-blue">const</span> isValid = crypto.verify(<span className="text-accent-green">&apos;sha256&apos;</span>, originalContent, {'{'}</div>
               <div className="pl-4">key: publicKey,</div>
               <div className="pl-4">padding: crypto.constants.<span className="text-on-dark">RSA_PKCS1_PSS_PADDING</span></div>
               <div>{'}'}, signatureBuffer);</div>
