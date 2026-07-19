@@ -42,65 +42,68 @@ export default function Home() {
               <Link href="/sign" className="button-primary h-[40px] px-6 text-[15px]">
                 Start Signing
               </Link>
-              <Link href="/sign" className="button-secondary h-[40px] px-6 text-[15px]">
+              <a 
+                href="#how-it-works" 
+                className="button-secondary h-[40px] px-6 text-[15px]"
+              >
                 Learn more
-              </Link>
+              </a>
             </div>
 
             {/* --- Command Palette Mockup (The "Product Screenshot") --- */}
             <div className="w-full max-w-[840px] mx-auto cmd-mockup-container text-left flex flex-col bg-surface shadow-[0_32px_128px_-16px_rgba(0,0,0,0.8)]">
               {/* Header / Search */}
-              <div className="h-[52px] border-b border-hairline flex items-center px-4 gap-3 bg-surface relative">
-                <Search className="w-5 h-5 text-mute absolute left-4" />
+              <div className="h-[52px] border-b border-hairline flex items-center px-4 gap-3 bg-surface">
+                <Search className="w-5 h-5 text-mute shrink-0" />
                 <input 
                   type="text" 
                   placeholder="Search or type a command..." 
-                  className="bg-transparent border-none outline-none text-[16px] text-on-dark flex-1 h-full pl-8 pr-4 placeholder:text-body focus:ring-0 w-full"
+                  className="bg-transparent border-none outline-none text-[16px] text-on-dark flex-1 h-full placeholder:text-body focus:ring-0 min-w-0"
                 />
-                <div className="rc-keycap">DigiSign</div>
+                <div className="rc-keycap shrink-0">DigiSign</div>
               </div>
               
               {/* Content Rows */}
               <div className="p-2 space-y-1">
                 <div className="px-3 py-2 text-[12px] font-medium text-mute tracking-[0.4px]">ACTIONS</div>
                 
-                <div className="cmd-mockup-row" data-active="true">
-                  <div className="w-8 h-8 rounded-md bg-accent-blue-soft border border-hairline flex items-center justify-center">
+                <Link href="/sign?tab=sign" className="cmd-mockup-row hover:bg-surface-elevated transition-colors cursor-pointer">
+                  <div className="w-8 h-8 rounded-md bg-accent-blue-soft border border-hairline flex items-center justify-center shrink-0">
                     <FileCheck className="w-4 h-4 text-accent-blue" />
                   </div>
-                  <div className="flex-1 flex flex-col justify-center">
-                    <span className="text-[14px] font-medium text-on-dark leading-tight">Sign Document</span>
-                    <span className="text-[12px] text-mute leading-tight mt-0.5">Generate RSA signature for file</span>
+                  <div className="flex-1 flex flex-col justify-center min-w-0">
+                    <span className="text-[14px] font-medium text-on-dark leading-tight truncate">Sign Document</span>
+                    <span className="text-[12px] text-mute leading-tight mt-0.5 truncate">Generate RSA signature for file</span>
                   </div>
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 shrink-0">
                     <span className="rc-keycap">⌘</span>
                     <span className="rc-keycap">S</span>
                   </div>
-                </div>
+                </Link>
 
-                <div className="cmd-mockup-row">
-                  <div className="w-8 h-8 rounded-md bg-accent-green-soft border border-hairline flex items-center justify-center">
+                <Link href="/sign?tab=verify" className="cmd-mockup-row hover:bg-surface-elevated transition-colors cursor-pointer">
+                  <div className="w-8 h-8 rounded-md bg-accent-green-soft border border-hairline flex items-center justify-center shrink-0">
                     <Shield className="w-4 h-4 text-accent-green" />
                   </div>
-                  <div className="flex-1 flex flex-col justify-center">
-                    <span className="text-[14px] font-medium text-on-dark leading-tight">Verify Signature</span>
-                    <span className="text-[12px] text-mute leading-tight mt-0.5">Check document integrity</span>
+                  <div className="flex-1 flex flex-col justify-center min-w-0">
+                    <span className="text-[14px] font-medium text-on-dark leading-tight truncate">Verify Signature</span>
+                    <span className="text-[12px] text-mute leading-tight mt-0.5 truncate">Check document integrity</span>
                   </div>
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 shrink-0">
                     <span className="rc-keycap">⌘</span>
                     <span className="rc-keycap">V</span>
                   </div>
-                </div>
+                </Link>
 
-                <div className="cmd-mockup-row">
-                  <div className="w-8 h-8 rounded-md bg-surface-elevated border border-hairline flex items-center justify-center">
+                <Link href="/sign?tab=keys" className="cmd-mockup-row hover:bg-surface-elevated transition-colors cursor-pointer">
+                  <div className="w-8 h-8 rounded-md bg-surface-elevated border border-hairline flex items-center justify-center shrink-0">
                     <Key className="w-4 h-4 text-body" />
                   </div>
-                  <div className="flex-1 flex flex-col justify-center">
-                    <span className="text-[14px] font-medium text-on-dark leading-tight">Generate Key Pair</span>
-                    <span className="text-[12px] text-mute leading-tight mt-0.5">Create new RSA-2048 keys</span>
+                  <div className="flex-1 flex flex-col justify-center min-w-0">
+                    <span className="text-[14px] font-medium text-on-dark leading-tight truncate">Generate Key Pair</span>
+                    <span className="text-[12px] text-mute leading-tight mt-0.5 truncate">Create new RSA-2048 keys</span>
                   </div>
-                </div>
+                </Link>
               </div>
             </div>
           </div>
@@ -164,6 +167,44 @@ export default function Home() {
                   Learn more <span className="text-mute">→</span>
                 </Link>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* --- Algorithm Explanation Section --- */}
+        <section id="how-it-works" className="py-[96px] px-6 md:px-12 max-w-[1240px] mx-auto w-full border-t border-hairline">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-[32px] md:text-[40px] font-semibold text-on-dark tracking-tight mb-6">
+                Under the hood.
+              </h2>
+              <div className="space-y-6 text-[16px] text-body leading-[1.6]">
+                <p>
+                  DigiSign leverages a robust combination of <strong>SHA-256 hashing</strong> and <strong>RSA-2048 asymmetric cryptography</strong> to guarantee both the integrity of your document and the authenticity of the signer.
+                </p>
+                <p>
+                  When you sign a document, the system first generates a unique digital fingerprint (hash) of the file using SHA-256. This ensures that even if a single byte in a gigabyte-sized file changes, the resulting hash will be completely different.
+                </p>
+                <p>
+                  This file is then processed using your mathematically generated <strong>RSA-2048 Private Key</strong> with PKCS#1 PSS padding. The resulting signature can only be decrypted and verified by your corresponding Public Key, proving without a doubt that you, and only you, authorized the document.
+                </p>
+              </div>
+            </div>
+            <div className="rc-card-elevated p-8 font-mono text-[13px] text-mute leading-[1.8] overflow-x-auto">
+              <div className="flex items-center gap-2 mb-4 border-b border-hairline pb-4">
+                <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+              </div>
+              <div><span className="text-accent-blue">const</span> signature = crypto.sign(<span className="text-accent-green">'sha256'</span>, fileContent, {'{'}</div>
+              <div className="pl-4">key: privateKey,</div>
+              <div className="pl-4">padding: crypto.constants.<span className="text-on-dark">RSA_PKCS1_PSS_PADDING</span></div>
+              <div>{'}'});</div>
+              <br />
+              <div><span className="text-accent-blue">const</span> isValid = crypto.verify(<span className="text-accent-green">'sha256'</span>, originalContent, {'{'}</div>
+              <div className="pl-4">key: publicKey,</div>
+              <div className="pl-4">padding: crypto.constants.<span className="text-on-dark">RSA_PKCS1_PSS_PADDING</span></div>
+              <div>{'}'}, signatureBuffer);</div>
             </div>
           </div>
         </section>

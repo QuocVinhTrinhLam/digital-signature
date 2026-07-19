@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { motion, AnimatePresence } from 'framer-motion'
 import Head from 'next/head'
 import { FileCheck, ShieldCheck, Key, Settings2 } from 'lucide-react'
@@ -9,7 +10,18 @@ import VerificationSection from '../components/VerificationSection'
 import KeysSection from '../components/KeysSection'
 
 export default function SignPage() {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState<'sign' | 'verify' | 'keys'>('sign')
+
+  useEffect(() => {
+    if (router.isReady && router.query.tab) {
+      const tab = router.query.tab as string
+      if (['sign', 'verify', 'keys'].includes(tab)) {
+        setActiveTab(tab as 'sign' | 'verify' | 'keys')
+      }
+    }
+  }, [router.isReady, router.query.tab])
+
   const [signedFile, setSignedFile] = useState<File | null>(null)
   const [signature, setSignature] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
